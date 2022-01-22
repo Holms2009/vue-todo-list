@@ -6,7 +6,20 @@
         <input class="main__input" type="text" v-model="inputText" />
         <Button textProp="Add Task" @click.native="handleButtonClick"></Button>
       </form>
-      <ToDoList :itemsProp="toDos" @remove="handleRemove" />
+      <div class="main__lists">
+        <ToDoList
+          title="My tasks"
+          :items="toDos"
+          :needButtons="true"
+          @remove="handleTask"
+          @done="handleTask"
+        />
+        <ToDoList
+          title="Finished tasks"
+          :items="finishedTasks"
+          :needButtons="false"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +37,7 @@ export default {
     return {
       inputText: "",
       toDos: [],
+      finishedTasks: [],
     };
   },
   components: {
@@ -35,16 +49,14 @@ export default {
     handleButtonClick: function () {
       if (!this.inputText.length) return;
 
-      this.toDos.push({ text: this.inputText });
+      this.toDos.push(this.inputText);
       this.inputText = "";
     },
-    handleRemove: function (task) {
-      let taskIndex;
 
-      for (let i = 0; i < this.toDos.length; i += 1) {
-        if (this.toDos[i].text === task) taskIndex = i;
-      }
+    handleTask: function ({ task, taskDone = false }) {
+      let taskIndex = this.toDos.indexOf(task);
 
+      if (taskDone) this.finishedTasks.push(this.toDos[taskIndex]);
       this.toDos.splice(taskIndex, 1);
     },
   },
@@ -73,9 +85,14 @@ export default {
       border-radius: 5px;
     }
 
-    .ToDoList {
+    &__lists {
       margin-top: 40px;
       margin-left: 20px;
+      display: flex;
+
+      .ToDoList {
+        margin-right: 50px;
+      }
     }
   }
 }
