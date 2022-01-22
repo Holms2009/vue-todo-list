@@ -21,6 +21,7 @@
         />
       </div>
     </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -65,10 +66,15 @@ export default {
 
 <style lang="scss">
 #app {
-  padding: 20px 100px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 20px 100px 0;
   color: #2c3e50;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   .main {
     margin-top: 30px;
@@ -94,6 +100,15 @@ export default {
         margin-right: 50px;
       }
     }
+  }
+
+  .footer {
+    margin-top: auto;
+    width: 100vw;
+    height: 80px;
+    background-color: #35383b;
+    position: relative;
+    left: -100px;
   }
 }
 </style>
