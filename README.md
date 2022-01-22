@@ -1,4 +1,4 @@
-# vue-test
+# Practice project for Vue.js
 
 ## Project setup
 ```
