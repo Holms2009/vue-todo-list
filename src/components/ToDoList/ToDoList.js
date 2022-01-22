@@ -1,11 +1,9 @@
 export default {
   name: 'ToDoList',
+  props: ['itemsProp'],
   data() {
     return {
-      items: this.props.items,
+      items: this.itemsProp,
     }
-  },
-  props: {
-    items: Array,
   }
 }

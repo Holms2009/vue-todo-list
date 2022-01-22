@@ -1,11 +1,14 @@
 export default {
   name: 'Button',
+  props: ['textProp'],
   data() {
     return {
-      text: this.props.text
+      text: this.textProp
     }
   },
-  props: {
-    text: String
+  methods: {
+    handleClick: function () {
+      this.$emit('click');
+    }
   }
 }

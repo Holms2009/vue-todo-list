@@ -1,4 +1,39 @@
 .ToDoList {
-  padding: 0;
-  margin : 0;
+  padding    : 0;
+  margin     : 0;
+  width      : 300px;
+  font-family: 'Montserrat', sans-serif;
+  list-style : decimal;
+
+  &__item {
+    margin-bottom  : 5px;
+    padding-right  : 15px;
+    width          : 100%;
+    position       : relative;
+    justify-content: space-between;
+
+    &-text {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    &-remove {
+      width          : 15px;
+      height         : 15px;
+      background     : url('../../assets/close-cross.svg') no-repeat 50% 50%;
+      background-size: cover;
+      position       : absolute;
+      top            : 0;
+      right          : 0;
+      cursor         : pointer;
+      transition     : all 0.2s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
+    }
+  }
 }
