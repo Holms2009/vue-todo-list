@@ -1,9 +1,56 @@
 .ToDoList {
   font-family: 'Montserrat', sans-serif;
 
+  &__title-wrapper {
+    padding        : 5px 0;
+    margin-bottom  : 5px;
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    border-bottom  : 1px solid grey;
+  }
+
   &__title {
-    font-size    : 20px;
-    border-bottom: 1px solid grey;
+    margin   : 0;
+    font-size: 20px;
+  }
+
+  &__sort {
+    display    : flex;
+    align-items: center;
+
+    &-toggle {
+      box-sizing   : border-box;
+      width        : 10px;
+      height       : 10px;
+      border-radius: 50%;
+      cursor       : pointer;
+      transition   : transform 0.5s ease;
+
+      &:not(:last-of-type) {
+        margin-right: 3px;
+      }
+
+      &:hover {
+        transform: translateY(2px);
+      }
+
+      &_low {
+        background-color: #3AAF3C;
+      }
+
+      &_mid {
+        background-color: orange;
+      }
+
+      &_high {
+        background-color: red;
+      }
+
+      &_none {
+        border: 1px solid black;
+      }
+    }
   }
 
   &__list {
@@ -22,7 +69,7 @@
       position       : relative;
       justify-content: space-between;
       border-bottom  : 2px solid #ffffff;
-      transition     : padding 0.5s ease;
+      transition     : padding 0.3s ease;
 
       &-text {
         margin       : 0;
@@ -39,11 +86,11 @@
         transition: all 0.2s ease;
 
         &:hover {
-          transform: translateY(-50%) scale(1.1);
+          transform: scale(1.1);
         }
 
         &:active {
-          transform: translateY(-50%) scale(1);
+          transform: scale(1);
         }
 
         &_remove {
@@ -69,10 +116,10 @@
       }
 
       .PriorityPopup {
-        bottom    : 0;
-        left      : 0;
-        height    : 0;
-        opacity   : 0;
+        bottom : 0;
+        left   : 0;
+        height : 0;
+        opacity: 0;
       }
     }
   }

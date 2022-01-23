@@ -65,7 +65,6 @@ export default {
     handlePriorityChange: function (priority, task) {
       let taskIndex = this.toDos.indexOf(task);
       this.toDos[taskIndex].priority = priority;
-      console.log(this.toDos[taskIndex]);
     },
   },
 };
