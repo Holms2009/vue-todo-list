@@ -1,0 +1,37 @@
+.PriorityPopup {
+  box-sizing         : border-box;
+  width              : 100%;
+  display            : flex;
+  align-items        : stretch;
+  position           : absolute;
+  transition         : 0.5s ease;
+  transition-property: opacity, height;
+
+  &__marker {
+    height             : 100%;
+    cursor             : pointer;
+    flex-basis         : 33.33%;
+    transition         : 0.3s ease;
+    transition-property: opacity, flex-basis;
+
+    &_green {
+      background-color: green;
+    }
+
+    &_yellow {
+      background-color: orange;
+    }
+
+    &_red {
+      background-color: red;
+    }
+
+    &_inactive {
+      opacity: 0.2;
+    }
+
+    &:hover {
+      flex-basis: 50%;
+    }
+  }
+}

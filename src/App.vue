@@ -13,6 +13,7 @@
           :needButtons="true"
           @remove="handleTask"
           @done="handleTask"
+          @priority-changed="handlePriorityChange"
         />
         <ToDoList
           title="Finished tasks"
@@ -37,7 +38,7 @@ export default {
   data() {
     return {
       inputText: "",
-      toDos: [],
+      toDos: [{ text: "Test task", priority: "none" }],
       finishedTasks: [],
     };
   },
@@ -50,7 +51,7 @@ export default {
     handleButtonClick: function () {
       if (!this.inputText.length) return;
 
-      this.toDos.push(this.inputText);
+      this.toDos.push({ text: this.inputText, priority: "none" });
       this.inputText = "";
     },
 
@@ -59,6 +60,12 @@ export default {
 
       if (taskDone) this.finishedTasks.push(this.toDos[taskIndex]);
       this.toDos.splice(taskIndex, 1);
+    },
+
+    handlePriorityChange: function (priority, task) {
+      let taskIndex = this.toDos.indexOf(task);
+      this.toDos[taskIndex].priority = priority;
+      console.log(this.toDos[taskIndex]);
     },
   },
 };
