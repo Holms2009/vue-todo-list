@@ -4,7 +4,6 @@ import Button from '../Button/Button.vue';
 
 export default {
   name: 'AuthForm',
-  props: ['isAuth'],
   data() {
     return {
       emailFieldValue: '',
@@ -61,11 +60,14 @@ export default {
           const user = userCredental.user;
           console.log(user);
           form.reset();
+          this.$emit('authorization', true);
+          this.$emit('toggleauthform');
         })
         .catch((err) => {
           const errorCode = err.code;
           const errorMessage = err.message;
           console.log(errorCode, errorMessage);
+          this.$emit('authorization', false);
       })
     }
   },

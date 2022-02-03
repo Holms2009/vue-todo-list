@@ -1,10 +1,18 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header
+      :isAuth="isAuth"
+      userName="Holms"
+      @toggleauthform="handleFormShow"
+    ></Header>
     <div class="main">
       <form class="main__form" action="GET">
         <input class="main__input" type="text" v-model="inputText" />
-        <Button textProp="Add Task" buttonType="button" @click.native="handleButtonClick"></Button>
+        <Button
+          textProp="Add Task"
+          buttonType="button"
+          @click.native="handleButtonClick"
+        ></Button>
       </form>
       <div class="main__lists">
         <ToDoList
@@ -23,7 +31,11 @@
       </div>
     </div>
     <div class="footer"></div>
-    <AuthForm :isAuth="false" />
+    <AuthForm
+      v-if="showAuthForm"
+      @authorization="handleAuthorize"
+      @toggleauthform="handleFormShow"
+    />
   </div>
 </template>
 
@@ -31,6 +43,7 @@
 import "normalize.css";
 import { initializeApp } from "firebase/app";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import Header from "./components/Header/Header.vue";
 import ToDoList from "./components/ToDoList/ToDoList.vue";
@@ -48,6 +61,11 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
+const auth = getAuth();
+
+onAuthStateChanged(auth, (user) => {
+  console.log(user, auth);
+})
 
 export default {
   name: "App",
@@ -56,7 +74,8 @@ export default {
       inputText: "",
       toDos: [{ text: "Test task", priority: "none" }],
       finishedTasks: [],
-      isAuth: false,
+      showAuthForm: false,
+      isAuth: auth ? true : false,
     };
   },
   components: {
@@ -83,6 +102,12 @@ export default {
     handlePriorityChange: function (priority, task) {
       let taskIndex = this.toDos.indexOf(task);
       this.toDos[taskIndex].priority = priority;
+    },
+    handleAuthorize(status) {
+      this.isAuth = status;
+    },
+    handleFormShow: function () {
+      this.showAuthForm = !this.showAuthForm;
     },
   },
 };
@@ -136,9 +161,8 @@ export default {
   }
 
   .AuthForm {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
     z-index: 1000;
   }
 }

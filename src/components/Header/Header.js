@@ -1,13 +1,16 @@
 import Button from "../Button/Button.vue";
+import AuthBlock from "../AuthBlock/AuthBlock.vue";
 
 export default {
   name: "Header",
+  props: ['isAuth', 'userName'],
   data() {
     return {
       title: 'My ToDo List'
     }
   },
   components: {
-    Button
+    Button,
+    AuthBlock
   }
 }
