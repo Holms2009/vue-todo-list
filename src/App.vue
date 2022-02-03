@@ -2,7 +2,7 @@
   <div id="app">
     <Header
       :isAuth="isAuth"
-      userName="Holms"
+      :userName="currentUser ? currentUser.email : ''"
       @toggleauthform="handleFormShow"
     ></Header>
     <div class="main">
@@ -41,31 +41,11 @@
 
 <script>
 import "normalize.css";
-import { initializeApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import Header from "./components/Header/Header.vue";
 import ToDoList from "./components/ToDoList/ToDoList.vue";
 import Button from "./components/Button/Button.vue";
 import AuthForm from "./components/AuthForm/AuthForm.vue";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBqqtJ13_9RQY2VcotGrDGr30nOZ6Y6e_8",
-  authDomain: "vue-task-board-8c5bd.firebaseapp.com",
-  projectId: "vue-task-board-8c5bd",
-  storageBucket: "vue-task-board-8c5bd.appspot.com",
-  messagingSenderId: "912348612221",
-  appId: "1:912348612221:web:8b6efbbf5ef3e4d7989314",
-  measurementId: "G-QKR9R2TY3E",
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore();
-const auth = getAuth();
-
-onAuthStateChanged(auth, (user) => {
-  console.log(user, auth);
-})
 
 export default {
   name: "App",
@@ -75,7 +55,7 @@ export default {
       toDos: [{ text: "Test task", priority: "none" }],
       finishedTasks: [],
       showAuthForm: false,
-      isAuth: auth ? true : false,
+      isAuth: this.$store.state.auth.currentUser ? true : false,
     };
   },
   components: {
@@ -110,6 +90,11 @@ export default {
       this.showAuthForm = !this.showAuthForm;
     },
   },
+  computed: {
+    currentUser: function() {
+      return this.$store.state.auth.currentUser;
+    }
+  }
 };
 </script>
 

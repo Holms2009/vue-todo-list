@@ -1,4 +1,5 @@
 import Button from '../Button/Button.vue';
+import { signOut } from "firebase/auth";
 
 export default {
   name: 'AuthBlock',
@@ -9,7 +10,9 @@ export default {
     }
   },
   methods: {
-
+    handleExitClick: function () {
+      signOut(this.$store.state.auth);
+    }
   },
   components: {
     Button

@@ -12,7 +12,7 @@
       <transition name="fade-menu">
         <div class="AuthBlock__menu" v-if="showMenu">
           <a class="AuthBlock__link" href="#">Settings</a>
-          <a class="AuthBlock__link" href="#">Exit</a>
+          <a class="AuthBlock__link" href="#" @click.prevent="handleExitClick">Exit</a>
         </div>
       </transition>
     </div>
