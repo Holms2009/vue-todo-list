@@ -1,6 +1,6 @@
 export default {
   name: 'Button',
-  props: ['textProp'],
+  props: ['textProp', 'buttonType'],
   data() {
     return {
       text: this.textProp

@@ -1,7 +1,7 @@
 .Button {
   padding         : 5px 10px;
-  font-family     : 'Roboto', sans-serif;
-  font-size       : 16px;
+  font-family     : 'Montserrat', sans-serif;
+  font-size       : 14px;
   color           : #ffffff;
   background-color: #3AAF3C;
   border          : none;
@@ -11,5 +11,10 @@
 
   &:hover {
     opacity: 0.9;
+  }
+
+  &_blocked {
+    background-color: lightgray;
+    pointer-events  : none;
   }
 }
