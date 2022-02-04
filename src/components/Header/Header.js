@@ -3,7 +3,7 @@ import AuthBlock from "../AuthBlock/AuthBlock.vue";
 
 export default {
   name: "Header",
-  props: ['isAuth', 'userName'],
+  props: ['userName'],
   data() {
     return {
       title: 'My ToDo List'

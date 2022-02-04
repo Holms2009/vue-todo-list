@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <Header
-      :isAuth="isAuth"
-      :userName="currentUser ? currentUser.email : ''"
+      :userName="isUserAuth ? getUser.email : ''"
       @toggleauthform="handleFormShow"
     ></Header>
     <div class="main">
@@ -41,6 +40,7 @@
 
 <script>
 import "normalize.css";
+import { mapGetters } from "vuex";
 
 import Header from "./components/Header/Header.vue";
 import ToDoList from "./components/ToDoList/ToDoList.vue";
@@ -55,7 +55,6 @@ export default {
       toDos: [{ text: "Test task", priority: "none" }],
       finishedTasks: [],
       showAuthForm: false,
-      isAuth: this.$store.state.auth.currentUser ? true : false,
     };
   },
   components: {
@@ -83,18 +82,18 @@ export default {
       let taskIndex = this.toDos.indexOf(task);
       this.toDos[taskIndex].priority = priority;
     },
-    handleAuthorize(status) {
+
+    handleAuthorize: function (status) {
       this.isAuth = status;
     },
+
     handleFormShow: function () {
       this.showAuthForm = !this.showAuthForm;
     },
   },
   computed: {
-    currentUser: function() {
-      return this.$store.state.auth.currentUser;
-    }
-  }
+    ...mapGetters(["isUserAuth", "getUser"]),
+  },
 };
 </script>
 

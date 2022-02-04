@@ -1,40 +1,30 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
-import App from './App.vue'
+import store from './store/store';
+import App from './App.vue';
 import { initializeApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBqqtJ13_9RQY2VcotGrDGr30nOZ6Y6e_8",
-  authDomain: "vue-task-board-8c5bd.firebaseapp.com",
-  projectId: "vue-task-board-8c5bd",
-  storageBucket: "vue-task-board-8c5bd.appspot.com",
-  messagingSenderId: "912348612221",
-  appId: "1:912348612221:web:8b6efbbf5ef3e4d7989314",
-  measurementId: "G-QKR9R2TY3E",
+const config = {
+  apiKey: process.env.VUE_APP_API_KEY,
+  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_APP_ID,
 };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore();
+
+const firebase = initializeApp(config);
 const auth = getAuth();
 
 onAuthStateChanged(auth, (user) => {
-  console.log(auth);
+  store.dispatch('setUserAction', user);
 })
 
 Vue.config.productionTip = false;
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {
-    auth,
-  }
-})
 
 new Vue({
   store,
   render: h => h(App),
 }).$mount('#app')
 
-
-
+export { firebase, auth };

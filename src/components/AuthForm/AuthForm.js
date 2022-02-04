@@ -1,6 +1,7 @@
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
+import { auth } from '../../main';
 
 export default {
   name: 'AuthForm',
@@ -27,6 +28,7 @@ export default {
         this.emailIsCorrect = false;
       }
     },
+
     handlePasswordInput: function (evt) {
       const fieldValue = evt.currentTarget.value;
       const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
@@ -39,6 +41,7 @@ export default {
         this.passwordIsCorrect = false;
       }
     },
+
     checkIfPasswordsMatch: function (evt) {
       const fieldValue = evt.currentTarget.value;
 
@@ -50,25 +53,12 @@ export default {
         this.passwordsMatch = false;
       }
     },
-    handleSubmit: function (evt) {
-      const form = evt.currentTarget;
-      const formData = new FormData(form);
-      const auth = getAuth();
 
-      createUserWithEmailAndPassword(auth, formData.get('email'), formData.get('password'))
-        .then((userCredental) => {
-          const user = userCredental.user;
-          console.log(user);
-          form.reset();
-          this.$emit('authorization', true);
-          this.$emit('toggleauthform');
+    handleSubmit: function () {
+      createUserWithEmailAndPassword(auth, this.emailFieldValue, this.passwordFieldValue)
+        .catch(err => {
+          this.$store.dispatch('setErrorAction', err.message);
         })
-        .catch((err) => {
-          const errorCode = err.code;
-          const errorMessage = err.message;
-          console.log(errorCode, errorMessage);
-          this.$emit('authorization', false);
-      })
     }
   },
   computed: {
