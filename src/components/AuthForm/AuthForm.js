@@ -6,7 +6,7 @@ export default {
   name: 'AuthForm',
   data() {
     return {
-      showRegister: false
+      showRegister: true
     }
   },
   components: {

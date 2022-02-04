@@ -2,6 +2,17 @@
   <form class="RegisterForm" action="POST" @submit.prevent="handleSubmit">
     <h2 class="RegisterForm__header">Register</h2>
     <label class="RegisterForm__label">
+      User name:
+      <input
+        class="RegisterForm__input RegisterForm__input_user-name"
+        type="text"
+        name="user-name"
+        placeholder="Enter user name"
+        :value="userNameFieldValue"
+        @input="handleUserNameInput"
+      />
+    </label>
+    <label class="RegisterForm__label">
       Email:
       <input
         class="RegisterForm__input RegisterForm__input_email"

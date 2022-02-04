@@ -1,3 +1,9 @@
+function validateUserName(fieldValue) {
+  const userNamePattern = /^[a-zA-Z0-9._-]{6,}$/;
+
+  return userNamePattern.test(fieldValue);
+}
+
 function validateEmail(fieldValue) {
   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -10,4 +16,8 @@ function validatePassword(fieldValue) {
   return passwordPattern.test(fieldValue);
 }
 
-export { validateEmail, validatePassword };
+export {
+  validateEmail,
+  validatePassword,
+  validateUserName
+};

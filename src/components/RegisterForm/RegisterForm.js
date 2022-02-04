@@ -1,13 +1,15 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
 import { auth } from '../../main';
-import { validateEmail, validatePassword } from "../../utils/validation";
+import { validateEmail, validatePassword, validateUserName } from "../../utils/validation";
 
 export default {
   name: 'RegisterForm',
   data() {
     return {
+      userNameFieldValue: '',
+      userNameIsCorrect: false,
       emailFieldValue: '',
       emailIsCorrect: false,
       passwordFieldValue: '',
@@ -17,6 +19,13 @@ export default {
     }
   },
   methods: {
+    handleUserNameInput: function (evt) {
+      const fieldValue = evt.currentTarget.value;
+
+      this.userNameFieldValue = fieldValue;
+      this.userNameIsCorrect = validateUserName(this.userNameFieldValue);
+    },
+
     handleEmailInput: function (evt) {
       const fieldValue = evt.currentTarget.value;
 
@@ -48,6 +57,9 @@ export default {
 
       createUserWithEmailAndPassword(auth, this.emailFieldValue, this.passwordFieldValue)
         .then((response) => {
+          updateProfile(response.user, {
+            displayName: this.userNameFieldValue
+          })
           form.reset();
           this.$emit('closeform');
         })
@@ -58,11 +70,11 @@ export default {
   },
   computed: {
     dataIsCorrect: function () {
-      if (this.emailIsCorrect && this.passwordIsCorrect && this.passwordsMatch) {
+      if (this.userNameIsCorrect && this.emailIsCorrect && this.passwordIsCorrect && this.passwordsMatch) {
         return true;
-      } else {
-        return false;
       }
+
+      return false;
     }
   },
   components: {

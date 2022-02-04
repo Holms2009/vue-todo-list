@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header
-      :userName="isUserAuth ? getUser.email : ''"
+      :userName="isUserAuth ? getUser.displayName : ''"
       @toggleauthform="handleFormShow"
     ></Header>
     <div class="main">
