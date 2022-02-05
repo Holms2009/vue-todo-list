@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header
-      :userName="isUserAuth ? getUser.email : ''"
+      :userName="isUserAuth ? getUser.displayName : ''"
       @toggleauthform="handleFormShow"
     ></Header>
     <div class="main">
@@ -98,6 +98,33 @@ export default {
 </script>
 
 <style lang="scss">
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  src: local("Montserrat"),
+    url("./assets/fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-style: normal;
+  font-display: auto;
+  src: local("Montserrat"),
+    url("./assets/fonts/Montserrat-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-style: normal;
+  font-display: auto;
+  src: local("Montserrat"),
+    url("./assets/fonts/Montserrat-ExtraBold.ttf") format("truetype");
+}
+
 #app {
   box-sizing: border-box;
   min-height: 100vh;

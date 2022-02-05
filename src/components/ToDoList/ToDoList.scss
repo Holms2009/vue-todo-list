@@ -13,6 +13,7 @@
   &__title {
     margin   : 0;
     font-size: 20px;
+    font-weight: 500;
   }
 
   &__sort {
@@ -94,13 +95,13 @@
         }
 
         &_remove {
-          background     : url('../../assets/close-cross.svg') no-repeat 50% 50%;
+          background     : url('../../assets/images/close-cross.svg') no-repeat 50% 50%;
           background-size: cover;
           right          : 0;
         }
 
         &_done {
-          background     : url('../../assets/done.svg') no-repeat 50% 50%;
+          background     : url('../../assets/images/done.svg') no-repeat 50% 50%;
           background-size: cover;
           right          : 20px;
         }
