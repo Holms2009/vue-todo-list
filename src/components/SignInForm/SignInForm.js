@@ -13,7 +13,6 @@ export default {
       emailFieldValue: '',
       emailIsCorrect: false,
       passwordFieldValue: '',
-      passwordIsCorrect: false,
       showTip: false,
       tipItems: [
         'Use only latin letters and numbers for e-mail and password',
@@ -35,7 +34,6 @@ export default {
       const fieldValue = evt.currentTarget.value;
 
       this.passwordFieldValue = fieldValue;
-      this.passwordIsCorrect = validatePassword(this.passwordFieldValue);
     },
 
     handleSubmit: function (evt) {
@@ -61,7 +59,7 @@ export default {
   },
   computed: {
     dataIsCorrect: function () {
-      if (this.emailIsCorrect && this.passwordIsCorrect) {
+      if (this.emailIsCorrect && this.passwordFieldValue !== '') {
         return true;
       } else {
         return false;

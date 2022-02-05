@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
 import ValidationTip from "../ValidationTip/ValidationTip.vue";
+import ErrorCover from "../ErrorCover/ErrorCover.vue";
 import { auth } from '../../main';
 import { validateEmail, validatePassword, validateUserName } from "../../utils/validation";
 
@@ -73,7 +74,13 @@ export default {
           this.$emit('closeform');
         })
         .catch((err) => {
-          this.error = err;
+          if (err.message.includes('auth/email-already-in-use')) {
+            this.error = 'E-mail already in use!';
+          } else {
+            this.error = 'Something went wrong...';
+          }
+
+          setTimeout(() => this.error = null, 3000);
         })
     }
   },
@@ -88,6 +95,7 @@ export default {
   },
   components: {
     Button,
-    ValidationTip
+    ValidationTip,
+    ErrorCover
   }
 }

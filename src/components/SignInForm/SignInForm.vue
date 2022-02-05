@@ -20,7 +20,7 @@
       <input
         :class="[
           'SignInForm__input',
-          { SignInForm__input_correct: passwordIsCorrect },
+          { SignInForm__input_correct: passwordFieldValue !== '' },
         ]"
         type="password"
         name="password"
