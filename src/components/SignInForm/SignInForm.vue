@@ -41,6 +41,7 @@
     <span class="SignInForm__control SignInForm__close" @click="$emit('closeform')"></span>
     <transition name="fade">
       <ValidationTip :items='tipItems' v-if="showTip"/>
+      <ErrorCover :message="error" v-if="!!error"/>
     </transition>
   </form>
 </template>

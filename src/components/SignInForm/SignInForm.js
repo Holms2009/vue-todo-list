@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
 import ValidationTip from "../ValidationTip/ValidationTip.vue";
+import ErrorCover from "../ErrorCover/ErrorCover.vue";
 import { auth } from '../../main';
 import { validateEmail, validatePassword } from "../../utils/validation";
 
@@ -18,7 +19,8 @@ export default {
         'Use only latin letters and numbers for e-mail and password',
         'Minimum password length is 8 characters',
         'Password must contain minimum 1 number and 1 uppercase letter'
-      ]
+      ],
+      error: null
     }
   },
   methods: {
@@ -45,7 +47,15 @@ export default {
           this.$emit('closeform');
         })
         .catch((err) => {
-          this.$store.dispatch('setErrorAction', err.message);
+          if (err.message.includes('auth/wrong-password')) {
+            this.error = 'Wrong password!';
+          } else if (err.message.includes('auth/user-not-found')) {
+            this.error = 'No such user!';
+          } else {
+            this.error = 'Something went wrong...';
+          }
+
+          setTimeout(() => this.error = null, 3000);
         })
     }
   },
@@ -60,6 +70,7 @@ export default {
   },
   components: {
     Button,
-    ValidationTip
+    ValidationTip,
+    ErrorCover
   }
 }

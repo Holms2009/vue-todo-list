@@ -103,4 +103,11 @@
     bottom  : 110%;
     left    : 0;
   }
+
+  .ErrorCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+  }
 }

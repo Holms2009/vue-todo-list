@@ -9,7 +9,6 @@ Vue.use(Vuex);
 const initialState = () => {
   return {
     user: null,
-    error: null
   }
 }
 

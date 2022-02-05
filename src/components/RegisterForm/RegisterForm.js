@@ -23,7 +23,8 @@ export default {
         'Minimum user name length is 6 characters',
         'Minimum password length is 8 characters',
         'Password must contain minimum 1 number and 1 uppercase letter'
-      ]
+      ],
+      error: null
     }
   },
   methods: {
@@ -72,7 +73,7 @@ export default {
           this.$emit('closeform');
         })
         .catch((err) => {
-          this.$store.dispatch('setErrorAction', err.message);
+          this.error = err;
         })
     }
   },
