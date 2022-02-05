@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
+import ValidationTip from "../ValidationTip/ValidationTip.vue";
 import { auth } from '../../main';
 import { validateEmail, validatePassword } from "../../utils/validation";
 
@@ -12,6 +13,12 @@ export default {
       emailIsCorrect: false,
       passwordFieldValue: '',
       passwordIsCorrect: false,
+      showTip: false,
+      tipItems: [
+        'Use only latin letters and numbers for e-mail and password',
+        'Minimum password length is 8 characters',
+        'Password must contain minimum 1 number and 1 uppercase letter'
+      ]
     }
   },
   methods: {
@@ -33,11 +40,11 @@ export default {
       const form = evt.currentTarget;
 
       signInWithEmailAndPassword(auth, this.emailFieldValue, this.passwordFieldValue)
-       .then((response) => {
-         form.reset();
-         this.$emit('closeform');
-       }) 
-      .catch((err) => {
+        .then((response) => {
+          form.reset();
+          this.$emit('closeform');
+        })
+        .catch((err) => {
           this.$store.dispatch('setErrorAction', err.message);
         })
     }
@@ -52,6 +59,7 @@ export default {
     }
   },
   components: {
-    Button
+    Button,
+    ValidationTip
   }
 }

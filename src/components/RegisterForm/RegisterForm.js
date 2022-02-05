@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
+import ValidationTip from "../ValidationTip/ValidationTip.vue";
 import { auth } from '../../main';
 import { validateEmail, validatePassword, validateUserName } from "../../utils/validation";
 
@@ -15,7 +16,14 @@ export default {
       passwordFieldValue: '',
       passwordIsCorrect: false,
       repeatPasswordFieldValue: '',
-      passwordsMatch: false
+      passwordsMatch: false,
+      showTip: false,
+      tipItems: [
+        'Use only latin letters and numbers for e-mail, password and user name',
+        'Minimum user name length is 6 characters',
+        'Minimum password length is 8 characters',
+        'Password must contain minimum 1 number and 1 uppercase letter'
+      ]
     }
   },
   methods: {
@@ -78,6 +86,7 @@ export default {
     }
   },
   components: {
-    Button
+    Button,
+    ValidationTip
   }
 }

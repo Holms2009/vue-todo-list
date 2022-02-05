@@ -41,18 +41,26 @@
     &:focus {
       border    : 1px solid rgba(0, 0, 0, 0);
       outline   : none;
-      box-shadow: 0 0 5px 0 #3AAF3C;
+      box-shadow: 0 0 5px 0 red;
+    }
+
+    &_correct {
+      &:focus {
+        border    : 1px solid rgba(0, 0, 0, 0);
+        outline   : none;
+        box-shadow: 0 0 5px 0 #3AAF3C;
+      }
     }
   }
 
   &__to-register-form {
-    font-weight   : 500;
-    position      : absolute;
-    top           : 15px;
-    left          : 15px;
-    cursor        : pointer;
-    transition    : transform 0.3s ease;
-    backface-visibility: hidden;
+    font-weight           : 500;
+    position              : absolute;
+    top                   : 15px;
+    left                  : 15px;
+    cursor                : pointer;
+    transition            : transform 0.3s ease;
+    backface-visibility   : hidden;
     -webkit-font-smoothing: subpixel-antialiased;
 
     &:hover {
@@ -60,17 +68,14 @@
     }
   }
 
-  &__close {
-    width          : 15px;
-    height         : 15px;
-    background     : url('../../assets/images/close-cross.svg') no-repeat 50% 50%;
-    background-size: cover;
-    position       : absolute;
-    top            : 10px;
-    right          : 10px;
-    cursor         : pointer;
-    transition     : transform 0.3s ease;
-    will-change    : transform;
+  &__control {
+    width      : 15px;
+    height     : 15px;
+    position   : absolute;
+    top        : 10px;
+    cursor     : pointer;
+    transition : transform 0.3s ease;
+    will-change: transform;
 
     &:hover {
       transform: scale(1.07);
@@ -79,5 +84,23 @@
     &:active {
       transform: scale(1);
     }
+  }
+
+  &__tip-toggle {
+    background     : url('../../assets/images/question.svg') no-repeat 50% 50%;
+    background-size: cover;
+    right          : 30px;
+  }
+
+  &__close {
+    background     : url('../../assets/images/close-cross.svg') no-repeat 50% 50%;
+    background-size: cover;
+    right          : 10px;
+  }
+
+  .ValidationTip {
+    position: absolute;
+    bottom  : 110%;
+    left    : 0;
   }
 }

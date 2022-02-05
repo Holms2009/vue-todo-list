@@ -9,7 +9,7 @@
     </div>
     <div class="AuthBlock__user" v-if="isAuth">
       <p class="AuthBlock__user-name" @click="showMenu = !showMenu">{{ userName }}</p>
-      <transition name="fade-menu">
+      <transition name="fade">
         <div class="AuthBlock__menu" v-if="showMenu">
           <a class="AuthBlock__link" href="#">Settings</a>
           <a class="AuthBlock__link" href="#" @click.prevent="handleExitClick">Exit</a>

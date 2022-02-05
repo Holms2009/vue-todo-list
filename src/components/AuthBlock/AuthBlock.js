@@ -13,6 +13,7 @@ export default {
   },
   methods: {
     handleExitClick: function () {
+      this.showMenu = false;
       signOut(auth);
     }
   },

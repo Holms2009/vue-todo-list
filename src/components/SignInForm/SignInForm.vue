@@ -4,7 +4,10 @@
     <label class="SignInForm__label">
       Email:
       <input
-        class="SignInForm__input SignInForm__input_email"
+        :class="[
+          'SignInForm__input',
+          { SignInForm__input_correct: emailIsCorrect },
+        ]"
         type="email"
         name="email"
         placeholder="Enter e-mail adress"
@@ -15,7 +18,10 @@
     <label class="SignInForm__label">
       Password:
       <input
-        class="SignInForm__input SignInForm__input_password"
+        :class="[
+          'SignInForm__input',
+          { SignInForm__input_correct: passwordIsCorrect },
+        ]"
         type="password"
         name="password"
         placeholder="Enter password"
@@ -28,8 +34,14 @@
       textProp="Sign In"
       buttonType="submit"
     />
-    <span class="SignInForm__close" @click="$emit('closeform')"></span>
-    <span class="SignInForm__to-register-form" @click="$emit('toregisterform')">Register</span>
+    <span class="SignInForm__to-register-form" @click="$emit('toregisterform')"
+      >Register</span
+    >
+    <span class="SignInForm__control SignInForm__tip-toggle" @click="showTip = !showTip"></span>
+    <span class="SignInForm__control SignInForm__close" @click="$emit('closeform')"></span>
+    <transition name="fade">
+      <ValidationTip :items='tipItems' v-if="showTip"/>
+    </transition>
   </form>
 </template>
 

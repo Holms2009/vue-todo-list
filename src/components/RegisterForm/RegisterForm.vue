@@ -4,7 +4,10 @@
     <label class="RegisterForm__label">
       User name:
       <input
-        class="RegisterForm__input RegisterForm__input_user-name"
+        :class="[
+          'RegisterForm__input',
+          { RegisterForm__input_correct: userNameIsCorrect },
+        ]"
         type="text"
         name="user-name"
         placeholder="Enter user name"
@@ -15,7 +18,10 @@
     <label class="RegisterForm__label">
       Email:
       <input
-        class="RegisterForm__input RegisterForm__input_email"
+        :class="[
+          'RegisterForm__input',
+          { RegisterForm__input_correct: emailIsCorrect },
+        ]"
         type="email"
         name="email"
         placeholder="Enter e-mail adress"
@@ -26,7 +32,10 @@
     <label class="RegisterForm__label">
       Password:
       <input
-        class="RegisterForm__input RegisterForm__input_password"
+        :class="[
+          'RegisterForm__input',
+          { RegisterForm__input_correct: passwordIsCorrect },
+        ]"
         type="password"
         name="password"
         placeholder="Enter password"
@@ -37,7 +46,10 @@
     <label class="RegisterForm__label">
       Repeat password:
       <input
-        class="RegisterForm__input RegisterForm__input_password"
+        :class="[
+          'RegisterForm__input',
+          { RegisterForm__input_correct: passwordsMatch },
+        ]"
         type="password"
         name="password-repeat"
         placeholder="Enter password"
@@ -50,8 +62,14 @@
       textProp="Register"
       buttonType="submit"
     />
-    <span class="RegisterForm__close" @click="$emit('closeform')"></span>
-    <span class="RegisterForm__to-signin-form" @click="$emit('tosigninform')">Sign In</span>
+    <span class="RegisterForm__to-signin-form" @click="$emit('tosigninform')"
+      >Sign In</span
+    >
+    <span class="RegisterForm__control RegisterForm__tip-toggle" @click="showTip = !showTip"></span>
+    <span class="RegisterForm__control RegisterForm__close" @click="$emit('closeform')"></span>
+    <transition name="fade">
+      <ValidationTip :items='tipItems' v-if="showTip"/>
+    </transition>
   </form>
 </template>
 

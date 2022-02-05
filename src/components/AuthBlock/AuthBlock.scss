@@ -50,13 +50,3 @@
     }
   }
 }
-
-.fade-menu-enter-active,
-.fade-menu-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-menu-enter,
-.fade-menu-leave-to {
-  opacity: 0;
-}

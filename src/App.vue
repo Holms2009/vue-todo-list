@@ -30,16 +30,19 @@
       </div>
     </div>
     <div class="footer"></div>
-    <AuthForm
-      v-if="showAuthForm"
-      @authorization="handleAuthorize"
-      @toggleauthform="handleFormShow"
-    />
+    <transition name="fade">
+      <AuthForm
+        v-if="showAuthForm"
+        @authorization="handleAuthorize"
+        @toggleauthform="handleFormShow"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
 import "normalize.css";
+import './utils/transitions.scss';
 import { mapGetters } from "vuex";
 
 import Header from "./components/Header/Header.vue";
