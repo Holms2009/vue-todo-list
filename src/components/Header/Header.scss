@@ -1,9 +1,17 @@
 .Header {
+  padding-bottom: 10px;
   width          : 100%;
   display        : flex;
   justify-content: space-between;
   align-items    : center;
   border-bottom  : 1px solid grey;
+
+  .logo {
+    width: 150px;
+    height: 30px;
+    background: url('../../assets/images/lister-logo.svg') no-repeat 50% 50%;
+    background-size: cover;
+  }
 
   &__title {
     font-family: 'Montserrat', sans-serif;

@@ -1,6 +1,6 @@
 <template>
   <div class="Header">
-    <h1 class="Header__title">{{ title }}</h1>
+    <div class="logo"></div>
     <AuthBlock :userName='userName' @showauthform='$emit("toggleauthform")'/>
   </div>
 </template>

@@ -140,6 +140,7 @@ export default {
   align-items: flex-start;
 
   .main {
+    width: 100%;
     margin-top: 30px;
 
     &__form {
@@ -157,7 +158,9 @@ export default {
     &__lists {
       margin-top: 40px;
       margin-left: 20px;
+      width: 100%;
       display: flex;
+      justify-content: space-between;
 
       .ToDoList {
         margin-right: 50px;

@@ -34,14 +34,20 @@
       textProp="Sign In"
       buttonType="submit"
     />
-    <span class="SignInForm__to-register-form" @click="$emit('toregisterform')"
-      >Register</span
-    >
-    <span class="SignInForm__control SignInForm__tip-toggle" @click="showTip = !showTip"></span>
-    <span class="SignInForm__control SignInForm__close" @click="$emit('closeform')"></span>
+    <span class="SignInForm__to-register-form" @click="$emit('toregisterform')">
+      Register
+    </span>
+    <span
+      class="SignInForm__control SignInForm__tip-toggle"
+      @click="showTip = !showTip"
+    ></span>
+    <span
+      class="SignInForm__control SignInForm__close"
+      @click="$emit('closeform')"
+    ></span>
     <transition name="fade">
-      <ValidationTip :items='tipItems' v-if="showTip"/>
-      <ErrorCover :message="error" v-if="!!error"/>
+      <ValidationTip :items="tipItems" v-if="showTip" />
+      <ErrorCover :message="error" v-if="!!error" />
     </transition>
   </form>
 </template>
