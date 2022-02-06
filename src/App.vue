@@ -33,7 +33,7 @@
         </transition>
         <ToDoList
           title="Finished tasks"
-          :items="finishedTasks"
+          :items="getUserDocs.completedTasks"
           :needButtons="false"
         />
       </div>
@@ -65,7 +65,6 @@ export default {
   data() {
     return {
       inputText: "",
-      finishedTasks: [],
       showAuthForm: false,
       show: true,
     };
@@ -81,21 +80,19 @@ export default {
         id: nanoid(6),
       };
 
-      this.inputText = '';
+      this.inputText = "";
       userDocs.todoList.push(newTask);
-      this.$store.dispatch("setUserDocsAction", userDocs);
-
-      if (this.isUserAuth) {
-        setDoc(doc(db, "users", this.getUser.email), this.getUserDocs, {
-          merge: true,
-        });
-      }
+      this.updateUserDocs(userDocs);
     },
 
     handleTask: function ({ task, taskDone = false }) {
-      // let taskIndex = this.toDos.indexOf(task);
-      // if (taskDone) this.finishedTasks.push(this.toDos[taskIndex]);
-      // this.toDos.splice(taskIndex, 1);
+      const userDocs = this.getUserDocs;
+      const taskIndex = userDocs.todoList.indexOf(task);
+
+      if (taskDone) userDocs.completedTasks.push(userDocs.todoList[taskIndex]);
+
+      userDocs.todoList.splice(taskIndex, 1);
+      this.updateUserDocs(userDocs);
     },
 
     handlePriorityChange: function (priority, task) {
@@ -105,6 +102,16 @@ export default {
 
     handleFormShow: function () {
       this.showAuthForm = !this.showAuthForm;
+    },
+
+    updateUserDocs: function (docs) {
+      this.$store.dispatch("setUserDocsAction", docs);
+
+      if (this.isUserAuth) {
+        setDoc(doc(db, "users", this.getUser.email), docs, {
+          merge: true,
+        });
+      }
     },
   },
   computed: {

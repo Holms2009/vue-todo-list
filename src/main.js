@@ -24,11 +24,10 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     getDoc(doc(db, 'users', user.email))
       .then((response) => {
-        console.log('Current user docs:', response.data());
         store.dispatch('setUserDocsAction', response.data());
       })
   } else {
-    const defaultDocs = { todoList: [] };
+    const defaultDocs = { todoList: [], completedTasks: [] };
     store.dispatch('setUserDocsAction', defaultDocs);
   }
 })

@@ -105,7 +105,8 @@ export default {
             email: this.emailFieldValue,
             firstName: '',
             lastName: '',
-            todoList: []
+            todoList: [],
+            completedTasks: []
           })
         })
         .catch((err) => {

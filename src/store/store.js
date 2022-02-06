@@ -10,7 +10,8 @@ const initialState = () => {
   return {
     user: null,
     userDocs: {
-      todoList: []
+      todoList: [],
+      completedTasks: []
     },
   }
 }
