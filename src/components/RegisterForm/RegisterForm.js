@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
 import ValidationTip from "../ValidationTip/ValidationTip.vue";
+import ErrorTip from '../ErrorTip/ErrorTip.vue';
 import ErrorCover from "../ErrorCover/ErrorCover.vue";
 import LoadingCover from "../LoadingCover/LoadingCover.vue";
 import { auth } from '../../main';
@@ -20,6 +21,7 @@ export default {
       repeatPasswordFieldValue: '',
       passwordsMatch: false,
       showTip: false,
+      showErrorTip: false,
       tipItems: [
         'Use only latin letters and numbers for e-mail, password and user name',
         'Minimum user name length is 6 characters',
@@ -31,6 +33,15 @@ export default {
     }
   },
   methods: {
+    handleTip: function () {
+      if (this.showErrorTip) {
+        this.showErrorTip = false;
+        return;
+      }
+
+      this.showTip = !this.showTip;
+    },
+    
     handleUserNameInput: function (evt) {
       const fieldValue = evt.currentTarget.value;
 
@@ -65,7 +76,15 @@ export default {
     },
 
     handleSubmit: function (evt) {
+      if (!this.dataIsCorrect) {
+        this.showTip = false;
+        this.showErrorTip = true;
+        return;
+      }
+
       this.pending = true;
+      this.showTip = false;
+      this.showErrorTip = false;
       const form = evt.currentTarget;
 
       createUserWithEmailAndPassword(auth, this.emailFieldValue, this.passwordFieldValue)
@@ -103,6 +122,7 @@ export default {
     Button,
     ValidationTip,
     ErrorCover,
-    LoadingCover
+    LoadingCover,
+    ErrorTip
   }
 }

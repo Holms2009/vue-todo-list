@@ -16,8 +16,15 @@ function validatePassword(fieldValue) {
   return passwordPattern.test(fieldValue);
 }
 
+function validateLatinAndNumbers(fieldValue) {
+  const pattern = /^[a-zA-Z0-9._-]{8,}$/;
+
+  return pattern.test(fieldValue);
+}
+
 export {
   validateEmail,
   validatePassword,
-  validateUserName
+  validateUserName,
+  validateLatinAndNumbers
 };

@@ -2,10 +2,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Button from '../Button/Button.vue';
 import ValidationTip from "../ValidationTip/ValidationTip.vue";
+import ErrorTip from '../ErrorTip/ErrorTip.vue';
 import ErrorCover from "../ErrorCover/ErrorCover.vue";
 import LoadingCover from "../LoadingCover/LoadingCover.vue";
 import { auth } from '../../main';
-import { validateEmail, validatePassword } from "../../utils/validation";
+import { validateEmail, validateLatinAndNumbers } from "../../utils/validation";
 
 export default {
   name: 'SignInForm',
@@ -14,17 +15,28 @@ export default {
       emailFieldValue: '',
       emailIsCorrect: false,
       passwordFieldValue: '',
+      passwordIsCorrect: false,
       showTip: false,
+      showErrorTip: false,
       tipItems: [
+        'All fields maut be filled',
         'Use only latin letters and numbers for e-mail and password',
         'Minimum password length is 8 characters',
-        'Password must contain minimum 1 number and 1 uppercase letter'
       ],
       error: null,
       pending: false
     }
   },
   methods: {
+    handleTip: function () {
+      if (this.showErrorTip) {
+        this.showErrorTip = false;
+        return;
+      }
+
+      this.showTip = !this.showTip;
+    },
+
     handleEmailInput: function (evt) {
       const fieldValue = evt.currentTarget.value;
 
@@ -36,10 +48,19 @@ export default {
       const fieldValue = evt.currentTarget.value;
 
       this.passwordFieldValue = fieldValue;
+      this.passwordIsCorrect = validateLatinAndNumbers(this.passwordFieldValue);
     },
 
     handleSubmit: function (evt) {
+      if (!this.dataIsCorrect) {
+        this.showTip = false;
+        this.showErrorTip = true;
+        return;
+      }
+
       this.pending = true;
+      this.showTip = false;
+      this.showErrorTip = false;
       const form = evt.currentTarget;
 
       signInWithEmailAndPassword(auth, this.emailFieldValue, this.passwordFieldValue)
@@ -61,11 +82,11 @@ export default {
 
           setTimeout(() => this.error = null, 3000);
         })
-    }
+    },
   },
   computed: {
     dataIsCorrect: function () {
-      if (this.emailIsCorrect && this.passwordFieldValue !== '') {
+      if (this.emailIsCorrect && this.passwordFieldValue !== '' && this.passwordIsCorrect) {
         return true;
       } else {
         return false;
@@ -75,6 +96,7 @@ export default {
   components: {
     Button,
     ValidationTip,
+    ErrorTip,
     ErrorCover,
     LoadingCover
   }

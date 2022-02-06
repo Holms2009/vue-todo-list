@@ -51,6 +51,10 @@
         box-shadow: 0 0 5px 0 #3AAF3C;
       }
     }
+
+    &_wrong-data {
+      box-shadow: 0 0 5px 0 red;
+    }
   }
 
   &__to-register-form {
@@ -98,7 +102,7 @@
     right          : 10px;
   }
 
-  .ValidationTip {
+  .ValidationTip, .ErrorTip {
     position: absolute;
     bottom  : 110%;
     left    : 0;

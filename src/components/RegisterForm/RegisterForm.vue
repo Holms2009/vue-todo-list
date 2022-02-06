@@ -62,15 +62,22 @@
       textProp="Register"
       buttonType="submit"
     />
-    <span class="RegisterForm__to-signin-form" @click="$emit('tosigninform')"
-      >Sign In</span
-    >
-    <span class="RegisterForm__control RegisterForm__tip-toggle" @click="showTip = !showTip"></span>
-    <span class="RegisterForm__control RegisterForm__close" @click="$emit('closeform')"></span>
+    <span class="RegisterForm__to-signin-form" @click="$emit('tosigninform')">
+      Sign In
+    </span>
+    <span
+      class="RegisterForm__control RegisterForm__tip-toggle"
+      @click="handleTip"
+    ></span>
+    <span
+      class="RegisterForm__control RegisterForm__close"
+      @click="$emit('closeform')"
+    ></span>
     <transition name="fade">
-      <ValidationTip :items='tipItems' v-if="showTip"/>
-      <ErrorCover :message="error" v-if="!!error"/>
-      <LoadingCover text="Please wait..." v-if="pending"/>
+      <ValidationTip :items="tipItems" v-if="showTip" />
+      <ErrorTip :items="tipItems" v-if="showErrorTip" />
+      <ErrorCover :message="error" v-if="!!error" />
+      <LoadingCover text="Please wait..." v-if="pending" />
     </transition>
   </form>
 </template>

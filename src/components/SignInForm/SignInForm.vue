@@ -20,7 +20,7 @@
       <input
         :class="[
           'SignInForm__input',
-          { SignInForm__input_correct: passwordFieldValue !== '' },
+          { SignInForm__input_correct: passwordIsCorrect },
         ]"
         type="password"
         name="password"
@@ -39,7 +39,7 @@
     </span>
     <span
       class="SignInForm__control SignInForm__tip-toggle"
-      @click="showTip = !showTip"
+      @click="handleTip"
     ></span>
     <span
       class="SignInForm__control SignInForm__close"
@@ -47,8 +47,9 @@
     ></span>
     <transition name="fade">
       <ValidationTip :items="tipItems" v-if="showTip" />
+      <ErrorTip :items="tipItems" v-if="showErrorTip" />
       <ErrorCover :message="error" v-if="!!error" />
-      <LoadingCover text="Please wait..." v-if="pending"/>
+      <LoadingCover text="Please wait..." v-if="pending" />
     </transition>
   </form>
 </template>
