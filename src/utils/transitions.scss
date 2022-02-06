@@ -7,3 +7,40 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+
+
+.width-enter-active,
+.width-leave-active {
+  animation-duration: 0.6s;
+}
+
+.width-enter-active {
+  animation-name: width-open;
+  animation-timing-function: ease-out;
+}
+
+.width-leave-to {
+  animation-name: width-close;
+  animation-timing-function: ease-out;
+}
+
+@keyframes width-open {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes width-close {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}

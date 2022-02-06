@@ -1,11 +1,13 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { nanoid } from "nanoid";
 
 import Button from '../Button/Button.vue';
 import ValidationTip from "../ValidationTip/ValidationTip.vue";
 import ErrorTip from '../ErrorTip/ErrorTip.vue';
 import ErrorCover from "../ErrorCover/ErrorCover.vue";
 import LoadingCover from "../LoadingCover/LoadingCover.vue";
-import { auth } from '../../main';
+import { auth, db } from '../../main';
 import { validateEmail, validatePassword, validateUserName } from "../../utils/validation";
 
 export default {
@@ -41,7 +43,7 @@ export default {
 
       this.showTip = !this.showTip;
     },
-    
+
     handleUserNameInput: function (evt) {
       const fieldValue = evt.currentTarget.value;
 
@@ -92,9 +94,19 @@ export default {
           updateProfile(response.user, {
             displayName: this.userNameFieldValue
           })
+          
           form.reset();
           this.$emit('closeform');
           this.pending = false;
+
+          setDoc(doc(db, 'users', this.emailFieldValue), {
+            userId: nanoid(8),
+            displayName: this.userNameFieldValue,
+            email: this.emailFieldValue,
+            firstName: '',
+            lastName: '',
+            todoList: []
+          })
         })
         .catch((err) => {
           this.pending = false;

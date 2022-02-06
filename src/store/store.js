@@ -9,6 +9,9 @@ Vue.use(Vuex);
 const initialState = () => {
   return {
     user: null,
+    userDocs: {
+      todoList: []
+    },
   }
 }
 

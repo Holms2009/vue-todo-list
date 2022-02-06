@@ -5,6 +5,9 @@ const getters = {
   isUserAuth(state) {
     return !!state.user;
   },
+  getUserDocs(state) {
+    return state.userDocs;
+  }
 };
 
 export default getters;

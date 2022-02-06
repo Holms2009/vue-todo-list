@@ -3,25 +3,34 @@
     <Header
       :userName="isUserAuth ? getUser.displayName : ''"
       @toggleauthform="handleFormShow"
+      @click.native="show = !show"
     ></Header>
     <div class="main">
       <form class="main__form" action="GET">
-        <input class="main__input" type="text" v-model="inputText" />
+        <input
+          class="main__input"
+          type="text"
+          v-model="inputText"
+          placeholder="Enter new task name"
+        />
         <Button
           textProp="Add Task"
           buttonType="button"
-          @click.native="handleButtonClick"
+          @click.native="handleAddTask"
         ></Button>
       </form>
       <div class="main__lists">
         <ToDoList
           title="My tasks"
-          :items="toDos"
+          :items="getUserDocs.todoList"
           :needButtons="true"
           @remove="handleTask"
           @done="handleTask"
           @priority-changed="handlePriorityChange"
         />
+        <transition name="width">
+          <!-- <EditZone v-if="show" /> -->
+        </transition>
         <ToDoList
           title="Finished tasks"
           :items="finishedTasks"
@@ -31,58 +40,67 @@
     </div>
     <div class="footer"></div>
     <transition name="fade">
-      <AuthForm
-        v-if="showAuthForm"
-        @toggleauthform="handleFormShow"
-      />
+      <AuthForm v-if="showAuthForm" @toggleauthform="handleFormShow" />
     </transition>
   </div>
 </template>
 
 <script>
-import "normalize.css";
+import { doc, setDoc } from "firebase/firestore";
+import { nanoid } from "nanoid";
 import { mapGetters } from "vuex";
-import './utils/transitions.scss';
 
+import "normalize.css";
+import "./utils/transitions.scss";
+
+import { db } from "./main";
 import Header from "./components/Header/Header.vue";
 import ToDoList from "./components/ToDoList/ToDoList.vue";
 import Button from "./components/Button/Button.vue";
 import AuthForm from "./components/AuthForm/AuthForm.vue";
+import EditZone from "./components/EditZone/EditZone.vue";
 
 export default {
   name: "App",
   data() {
     return {
       inputText: "",
-      toDos: [{ text: "Test task", priority: "none" }],
       finishedTasks: [],
       showAuthForm: false,
+      show: true,
     };
   },
-  components: {
-    Header,
-    ToDoList,
-    Button,
-    AuthForm,
-  },
   methods: {
-    handleButtonClick: function () {
+    handleAddTask: function () {
       if (!this.inputText.length) return;
 
-      this.toDos.push({ text: this.inputText, priority: "none" });
-      this.inputText = "";
+      const userDocs = this.getUserDocs;
+      const newTask = {
+        text: this.inputText,
+        priority: "none",
+        id: nanoid(6),
+      };
+
+      this.inputText = '';
+      userDocs.todoList.push(newTask);
+      this.$store.dispatch("setUserDocsAction", userDocs);
+
+      if (this.isUserAuth) {
+        setDoc(doc(db, "users", this.getUser.email), this.getUserDocs, {
+          merge: true,
+        });
+      }
     },
 
     handleTask: function ({ task, taskDone = false }) {
-      let taskIndex = this.toDos.indexOf(task);
-
-      if (taskDone) this.finishedTasks.push(this.toDos[taskIndex]);
-      this.toDos.splice(taskIndex, 1);
+      // let taskIndex = this.toDos.indexOf(task);
+      // if (taskDone) this.finishedTasks.push(this.toDos[taskIndex]);
+      // this.toDos.splice(taskIndex, 1);
     },
 
     handlePriorityChange: function (priority, task) {
-      let taskIndex = this.toDos.indexOf(task);
-      this.toDos[taskIndex].priority = priority;
+      // let taskIndex = this.toDos.indexOf(task);
+      // this.toDos[taskIndex].priority = priority;
     },
 
     handleFormShow: function () {
@@ -90,7 +108,14 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["isUserAuth", "getUser"]),
+    ...mapGetters(["isUserAuth", "getUser", "getUserDocs"]),
+  },
+  components: {
+    Header,
+    ToDoList,
+    Button,
+    AuthForm,
+    EditZone,
   },
 };
 </script>
@@ -123,6 +148,14 @@ export default {
     url("./assets/fonts/Montserrat-ExtraBold.ttf") format("truetype");
 }
 
+html * {
+  font-family: "Montserrat", sans-serif;
+
+  &::placeholder {
+    color: lightgray;
+  }
+}
+
 #app {
   box-sizing: border-box;
   min-height: 100vh;
@@ -132,7 +165,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 
   .main {
     width: 100%;
@@ -145,21 +177,19 @@ export default {
     }
 
     &__input {
-      padding: 4px 10px;
+      padding: 5px;
       border: 1px solid grey;
       border-radius: 5px;
     }
 
     &__lists {
+      box-sizing: border-box;
       margin-top: 40px;
-      margin-left: 20px;
+      padding: 0 20px;
       width: 100%;
       display: flex;
       justify-content: space-between;
-
-      .ToDoList {
-        margin-right: 50px;
-      }
+      align-items: stretch;
     }
   }
 
