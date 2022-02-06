@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Button from '../Button/Button.vue';
 import ValidationTip from "../ValidationTip/ValidationTip.vue";
 import ErrorCover from "../ErrorCover/ErrorCover.vue";
+import LoadingCover from "../LoadingCover/LoadingCover.vue";
 import { auth } from '../../main';
 import { validateEmail, validatePassword, validateUserName } from "../../utils/validation";
 
@@ -25,7 +26,8 @@ export default {
         'Minimum password length is 8 characters',
         'Password must contain minimum 1 number and 1 uppercase letter'
       ],
-      error: null
+      error: null,
+      pending: false
     }
   },
   methods: {
@@ -63,6 +65,7 @@ export default {
     },
 
     handleSubmit: function (evt) {
+      this.pending = true;
       const form = evt.currentTarget;
 
       createUserWithEmailAndPassword(auth, this.emailFieldValue, this.passwordFieldValue)
@@ -72,8 +75,11 @@ export default {
           })
           form.reset();
           this.$emit('closeform');
+          this.pending = false;
         })
         .catch((err) => {
+          this.pending = false;
+
           if (err.message.includes('auth/email-already-in-use')) {
             this.error = 'E-mail already in use!';
           } else {
@@ -96,6 +102,7 @@ export default {
   components: {
     Button,
     ValidationTip,
-    ErrorCover
+    ErrorCover,
+    LoadingCover
   }
 }

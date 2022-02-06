@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import Button from '../Button/Button.vue';
 import ValidationTip from "../ValidationTip/ValidationTip.vue";
 import ErrorCover from "../ErrorCover/ErrorCover.vue";
+import LoadingCover from "../LoadingCover/LoadingCover.vue";
 import { auth } from '../../main';
 import { validateEmail, validatePassword } from "../../utils/validation";
 
@@ -19,7 +20,8 @@ export default {
         'Minimum password length is 8 characters',
         'Password must contain minimum 1 number and 1 uppercase letter'
       ],
-      error: null
+      error: null,
+      pending: false
     }
   },
   methods: {
@@ -37,14 +39,18 @@ export default {
     },
 
     handleSubmit: function (evt) {
+      this.pending = true;
       const form = evt.currentTarget;
 
       signInWithEmailAndPassword(auth, this.emailFieldValue, this.passwordFieldValue)
         .then((response) => {
           form.reset();
           this.$emit('closeform');
+          this.pending = false;
         })
         .catch((err) => {
+          this.pending = false;
+
           if (err.message.includes('auth/wrong-password')) {
             this.error = 'Wrong password!';
           } else if (err.message.includes('auth/user-not-found')) {
@@ -69,6 +75,7 @@ export default {
   components: {
     Button,
     ValidationTip,
-    ErrorCover
+    ErrorCover,
+    LoadingCover
   }
 }

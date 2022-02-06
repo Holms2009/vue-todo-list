@@ -33,7 +33,6 @@
     <transition name="fade">
       <AuthForm
         v-if="showAuthForm"
-        @authorization="handleAuthorize"
         @toggleauthform="handleFormShow"
       />
     </transition>
@@ -42,8 +41,8 @@
 
 <script>
 import "normalize.css";
-import './utils/transitions.scss';
 import { mapGetters } from "vuex";
+import './utils/transitions.scss';
 
 import Header from "./components/Header/Header.vue";
 import ToDoList from "./components/ToDoList/ToDoList.vue";
@@ -84,10 +83,6 @@ export default {
     handlePriorityChange: function (priority, task) {
       let taskIndex = this.toDos.indexOf(task);
       this.toDos[taskIndex].priority = priority;
-    },
-
-    handleAuthorize: function (status) {
-      this.isAuth = status;
     },
 
     handleFormShow: function () {

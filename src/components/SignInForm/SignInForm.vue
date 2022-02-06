@@ -48,6 +48,7 @@
     <transition name="fade">
       <ValidationTip :items="tipItems" v-if="showTip" />
       <ErrorCover :message="error" v-if="!!error" />
+      <LoadingCover text="Please wait..." v-if="pending"/>
     </transition>
   </form>
 </template>

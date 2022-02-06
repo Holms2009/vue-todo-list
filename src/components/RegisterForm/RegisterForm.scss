@@ -54,13 +54,13 @@
   }
 
   &__to-signin-form {
-    font-weight   : 500;
-    position      : absolute;
-    top           : 15px;
-    left          : 15px;
-    cursor        : pointer;
-    transition    : transform 0.3s ease;
-    backface-visibility: hidden;
+    font-weight           : 500;
+    position              : absolute;
+    top                   : 15px;
+    left                  : 15px;
+    cursor                : pointer;
+    transition            : transform 0.3s ease;
+    backface-visibility   : hidden;
     -webkit-font-smoothing: subpixel-antialiased;
 
     &:hover {
@@ -100,13 +100,14 @@
 
   .ValidationTip {
     position: absolute;
-    top  : 20%;
+    top     : 20%;
     left    : 110%;
   }
 
-  .ErrorCover {
+  .ErrorCover,
+  .LoadingCover {
     position: absolute;
-    top: 0;
-    left: 0;
+    top     : 0;
+    left    : 0;
   }
 }
