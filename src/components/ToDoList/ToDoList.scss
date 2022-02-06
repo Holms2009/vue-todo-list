@@ -11,8 +11,8 @@
   }
 
   &__title {
-    margin   : 0;
-    font-size: 20px;
+    margin     : 0;
+    font-size  : 20px;
     font-weight: 500;
   }
 
@@ -107,12 +107,14 @@
         }
       }
 
-      &:hover {
-        padding-bottom: 15px;
+      &_active {
+        &:hover {
+          padding-bottom: 15px;
 
-        .PriorityPopup {
-          height : 10px;
-          opacity: 1;
+          .PriorityPopup {
+            height : 10px;
+            opacity: 1;
+          }
         }
       }
 

@@ -22,7 +22,7 @@
       </div>
     </div>
     <ul class="ToDoList__list">
-      <li class="ToDoList__item" v-for="item in sortedItems" :key="item.id">
+      <li :class="['ToDoList__item', {'ToDoList__item_active': activeItems}]" v-for="item in sortedItems" :key="item.id">
         <p class="ToDoList__item-text">{{ item.text }}</p>
         <span
           v-if="needButtons"

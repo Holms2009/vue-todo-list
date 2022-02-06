@@ -24,6 +24,7 @@
           title="My tasks"
           :items="getUserDocs.todoList"
           :needButtons="true"
+          :activeItems="true"
           @remove="handleTask"
           @done="handleTask"
           @priority-changed="handlePriorityChange"
@@ -35,6 +36,7 @@
           title="Finished tasks"
           :items="getUserDocs.completedTasks"
           :needButtons="false"
+          :activeItems="false"
         />
       </div>
     </div>
@@ -96,8 +98,11 @@ export default {
     },
 
     handlePriorityChange: function (priority, task) {
-      // let taskIndex = this.toDos.indexOf(task);
-      // this.toDos[taskIndex].priority = priority;
+      const userDocs = this.getUserDocs;
+      const taskIndex = userDocs.todoList.indexOf(task);
+
+      userDocs.todoList[taskIndex].priority = priority;
+      this.updateUserDocs(userDocs);
     },
 
     handleFormShow: function () {
