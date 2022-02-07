@@ -3,7 +3,6 @@
     <Header
       :userName="isUserAuth ? getUser.displayName : ''"
       @toggleauthform="handleFormShow"
-      @click.native="show = !show"
     ></Header>
     <div class="main">
       <form class="main__form" action="GET">
@@ -28,12 +27,13 @@
           @remove="handleTask"
           @done="handleTask"
           @priority-changed="handlePriorityChange"
+          @toggle-editor="showEditZone = true"
         />
-        <transition name="width">
-          <!-- <EditZone v-if="show" /> -->
+        <transition name="edit-zone">
+          <EditZone v-if="showEditZone" @toggle-editor="showEditZone = false" />
         </transition>
         <ToDoList
-          title="Finished tasks"
+          title="Completed tasks"
           :items="getUserDocs.completedTasks"
           :needButtons="false"
           :activeItems="false"
@@ -68,7 +68,7 @@ export default {
     return {
       inputText: "",
       showAuthForm: false,
-      show: true,
+      showEditZone: false,
     };
   },
   methods: {

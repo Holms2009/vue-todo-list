@@ -10,37 +10,51 @@
 
 
 
-.width-enter-active,
-.width-leave-active {
-  animation-duration: 0.6s;
+.edit-zone-enter-active,
+.edit-zone-leave-active {
+  animation-duration: 1s;
 }
 
-.width-enter-active {
-  animation-name: width-open;
+.edit-zone-enter-active {
+  animation-name           : width-open;
   animation-timing-function: ease-out;
 }
 
-.width-leave-to {
-  animation-name: width-close;
+.edit-zone-leave-to {
+  animation-name           : width-close;
   animation-timing-function: ease-out;
 }
 
 @keyframes width-open {
   0% {
-    width: 0%;
+    width : 0;
+    height: 2px;
+  }
+
+  50% {
+    width : 100%;
+    height: 2px;
   }
 
   100% {
-    width: 100%;
+    width : 100%;
+    height: 70vh;
   }
 }
 
 @keyframes width-close {
   0% {
-    width: 100%;
+    width : 100%;
+    height: 70vh;
+  }
+
+  50% {
+    width : 100%;
+    height: 2px;
   }
 
   100% {
-    width: 0%;
+    width : 0%;
+    height: 2px;
   }
 }

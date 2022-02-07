@@ -22,8 +22,14 @@
       </div>
     </div>
     <ul class="ToDoList__list">
-      <li :class="['ToDoList__item', {'ToDoList__item_active': activeItems}]" v-for="item in sortedItems" :key="item.id">
-        <p class="ToDoList__item-text">{{ item.text }}</p>
+      <li
+        :class="['ToDoList__item', { ToDoList__item_active: activeItems }]"
+        v-for="item in sortedItems"
+        :key="item.id"
+      >
+        <p class="ToDoList__item-text" @click.self="$emit('toggle-editor')">
+          {{ item.text }}
+        </p>
         <span
           v-if="needButtons"
           class="ToDoList__button ToDoList__button_done"
